@@ -69,18 +69,41 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
-    {
-        //
+ public function edit($id)
+{
+    $product = Product::findOrFail($id);
+    return view('shop.edit-product', compact('product'));
+}
+
+public function update(Request $request, $id)
+{
+    $product = Product::findOrFail($id);
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric|min:0',
+        'on_sale' => 'nullable|boolean',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ]);
+
+    // تحديث الحقول
+    $product->name = $validated['name'];
+    $product->description = $validated['description'];
+    $product->price = $validated['price'];
+    $product->on_sale = $request->has('on_sale');
+
+    // تحديث الصورة إذا رفعت
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('products', 'public');
+        $product->image = $imagePath;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
+    $product->save();
+
+    return redirect()->route('shop.products')
+                     ->with('success', 'Product updated successfully!');
+}
 
     /**
      * Remove the specified resource from storage.
