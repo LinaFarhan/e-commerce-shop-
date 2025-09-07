@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StoreController;
-
+use App\Http\Controllers\ProductController;
 
  Route::get('/shop',[ShopController::class,'index']);
 
@@ -18,3 +18,7 @@ Route::get('/about-us', [StoreController::class, 'about'])->name('shop.about-us'
 
 Route::get('/contact', [StoreController::class, 'contact'])->name('shop.contact');
 Route::post('/contact', [StoreController::class, 'submitContact'])->name('shop.contact.submit');
+
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);

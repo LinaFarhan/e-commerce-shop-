@@ -10,10 +10,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+  public function index()
+{
+    $products = Product::all(); // جلب كل المنتجات
+    return view('shop.products', compact('products'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -34,10 +35,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
-    {
-        //
-    }
+   public function show($id)
+{
+    $product = Product::find($id); // البحث عن المنتج حسب الـ id
+    return view('shop.product-details', compact('product'));
+}
+
 
     /**
      * Show the form for editing the specified resource.
