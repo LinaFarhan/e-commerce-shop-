@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+    return view('shop.create-product');
     }
 
     /**
@@ -29,7 +29,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // التحقق من صحة البيانات
+        $validated = $request->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price'       => 'required|numeric|min:0',
+            'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        //  رفع الصورة إذا وجدت
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        // حفظ المنتج
+        Product::create([
+            'name'        => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'price'       => $validated['price'],
+            'on_sale'     => false,
+            'image'       => $imagePath, // نحتاج نضيف عمود image بالـ migration
+        ]);
+
+        //  إعادة التوجيه مع رسالة نجاح
+        return redirect()->route('shop.products')->with('success', 'Product created successfully!');
     }
 
     /**
