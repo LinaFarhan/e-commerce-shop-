@@ -1,34 +1,44 @@
 @extends('layouts.app')
 
-@section('title', 'Contact')
+@section('title', 'Contact Us')
 
 @section('content')
-  <h1>Contact Us</h1>
+  <h1 class="mb-4">Contact Us</h1>
 
-  @if(session('status'))
-    <div class="alert alert-success">{{ session('status') }}</div>
+  {{-- عرض رسالة النجاح إذا فيه --}}
+  @if(session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
   @endif
 
-  <form method="POST" action="{{ route('shop.contact.submit') }}" class="card p-4">
+  <form action="{{ route('contact.submit') }}" method="POST">
     @csrf
+
     <div class="mb-3">
       <label class="form-label">Name</label>
-      <input name="name" class="form-control" value="{{ old('name') }}">
-      @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+      <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+      @error('name')
+        <small class="text-danger">{{ $message }}</small>
+      @enderror
     </div>
 
     <div class="mb-3">
       <label class="form-label">Email</label>
-      <input name="email" type="email" class="form-control" value="{{ old('email') }}">
-      @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+      <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+      @error('email')
+        <small class="text-danger">{{ $message }}</small>
+      @enderror
     </div>
 
     <div class="mb-3">
       <label class="form-label">Message</label>
-      <textarea name="message" class="form-control" rows="5">{{ old('message') }}</textarea>
-      @error('message') <small class="text-danger">{{ $message }}</small> @enderror
+      <textarea name="message" class="form-control" rows="5" required>{{ old('message') }}</textarea>
+      @error('message')
+        <small class="text-danger">{{ $message }}</small>
+      @enderror
     </div>
 
-    <button class="btn btn-primary">Send</button>
+    <button type="submit" class="btn btn-primary">Send Message</button>
   </form>
 @endsection
