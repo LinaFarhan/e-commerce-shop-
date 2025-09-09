@@ -24,9 +24,20 @@
         @endif
         <div class="mt-2">
           <a class="btn btn-outline-primary btn-sm"
-             href="{{ route('shop.productDetails', $product->id) }}">
+             href="{{ route('shop.productDetails', $product->id)}}">
             View Details
           </a>
+            <a class="btn btn-outline-warning btn-sm"
+       href="{{ route('products.edit', $product->id)}}">
+       Edit
+    </a>
+    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline"
+      onsubmit="return confirm('Are you sure you want to delete this product?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+</form>
+
         </div>
       </div>
     </div>
