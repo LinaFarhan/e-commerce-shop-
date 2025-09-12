@@ -13,8 +13,8 @@
     <header>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
+        <d iv class="container">
+            <a class="navbar-brand" href="{{ route('shop.index') }}">
                 <i class="fas fa-shopping-bag me-2"></i>
                E-COMMERCE STORE
             </a>
@@ -27,16 +27,16 @@
                         <a class="nav-link active" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Products</a>
+                        <a class="nav-link" href="{{ route('shop.products') }}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Categories</a>
+                        <a class="nav-link" href="{{ route('shop.cart') }}">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="{{ route('shop.about-us') }}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="{{ route('shop.contact') }}">Contact</a>
                     </li>
                 </ul>
                 <div class="d-flex">
