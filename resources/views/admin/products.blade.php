@@ -11,7 +11,15 @@
         <td>{{ $product->name }}</td>
         <td>${{ $product->price }}</td>
         <td>{{ $product->category->name }}</td>
+         <td>
+            @can('update', $product)
+                <button>Edit Product</button>
+            @endcan
+        </td>
     </tr>
     @endforeach
 </table>
 @endsection
+@can('update', $product)
+    <button>Edit Product</button>
+@endcan
