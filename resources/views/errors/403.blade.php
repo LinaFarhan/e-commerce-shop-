@@ -1,0 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
+<h1>403 - Forbidden</h1>
+<p>You are not authorized to access this page.</p>
+@endsection
