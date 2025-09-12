@@ -27,6 +27,11 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/products', [AdminController::class, 'products']);
+    Route::get('/categories', [AdminController::class, 'categories']);
+});
 
 
 Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
