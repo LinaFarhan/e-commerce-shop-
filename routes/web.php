@@ -1,43 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ContactController;
 
- Route::get('/shop',[ShopController::class,'index']);
-
-Route::get('/', [StoreController::class, 'index'])->name('shop.index');
-
-Route::get('/products', [StoreController::class, 'products'])->name('shop.products');
-Route::get('/products/{id}', [StoreController::class, 'productDetails'])->name('shop.productDetails');
-
-Route::get('/cart', [StoreController::class, 'cart'])->name('shop.cart');
-
-Route::get('/about-us', [StoreController::class, 'about'])->name('shop.about-us');
-
-Route::get('/contact', [StoreController::class, 'contact'])->name('shop.contact');
-Route::post('/contact', [StoreController::class, 'submitContact'])->name('shop.contact.submit');
-
-
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard']);
-    Route::get('/products', [AdminController::class, 'products']);
-    Route::get('/categories', [AdminController::class, 'categories']);
+Route::get('/', function () {
+    return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
-
-
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+require __DIR__.'/auth.php';
