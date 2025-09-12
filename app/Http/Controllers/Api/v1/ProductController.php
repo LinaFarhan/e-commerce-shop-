@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\ProductResource ;
+use App\Models\Product;
 class ProductController extends Controller
 {
     /**
@@ -12,7 +13,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+     return ProductResource::collection(Product::all());
+
     }
 
     /**
